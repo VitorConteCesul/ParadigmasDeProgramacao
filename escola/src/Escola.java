@@ -3,6 +3,9 @@
 import java.lang.reflect.Array;
 import java.util.*;
 
+
+// Testanto o commit
+
 public class Escola {
     public ArrayList<Aluno> alunos;
     public ArrayList<Curso> cursos;
