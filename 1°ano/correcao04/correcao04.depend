@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1724433909 source:c:\users\contevitoo\desktop\trabalhos_junior\trabalho_01\correcao_professor_sala_04\correcao04\main.c
+	<stdio.h>
+	<stdlib.h>
+	<locale.h>
+
