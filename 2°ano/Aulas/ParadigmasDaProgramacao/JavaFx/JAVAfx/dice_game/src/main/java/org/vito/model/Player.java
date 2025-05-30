@@ -16,7 +16,7 @@ package org.vito.model;
 
 // ... A partir do Java 16, geramos tudo automaticamente:
 
-public record Playes(
+public record Player(
         String id, // id gerado pelo Mongo
         String nome, // nome digitado pelo usuário
         int pontos, //pontos atuais (0-20)
