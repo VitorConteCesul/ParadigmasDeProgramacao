@@ -1,0 +1,20 @@
+Você: PEDRA | CPU: PAPEL | Você perdeu!
+Você: PEDRA | CPU: PAPEL | Você perdeu!
+Você: PEDRA | CPU: TESOURA | Você venceu!
+Você: PEDRA | CPU: PEDRA | Empate!
+Você: PEDRA | CPU: PEDRA | Empate!
+Você: PAPEL | CPU: PEDRA | Você venceu!
+Você: TESOURA | CPU: PAPEL | Você venceu!
+Você: PEDRA | CPU: PEDRA | Empate!
+Você: PAPEL | CPU: PEDRA | Você venceu!
+Você: TESOURA | CPU: PAPEL | Você venceu!
+Você: TESOURA | CPU: PAPEL | Você venceu!
+Você: TESOURA | CPU: TESOURA | Empate!
+Você: TESOURA | CPU: PAPEL | Você venceu!
+Você: TESOURA | CPU: PAPEL | Você venceu!
+Você: TESOURA | CPU: PEDRA | Você perdeu!
+Você: TESOURA | CPU: TESOURA | Empate!
+Você: TESOURA | CPU: PEDRA | Você perdeu!
+Você: PAPEL | CPU: PEDRA | Você venceu!
+Você: PEDRA | CPU: TESOURA | Você venceu!
+Você: TESOURA | CPU: PAPEL | Você venceu!

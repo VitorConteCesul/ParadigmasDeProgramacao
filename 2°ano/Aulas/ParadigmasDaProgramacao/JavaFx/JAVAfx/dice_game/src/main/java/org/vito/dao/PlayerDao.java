@@ -76,4 +76,8 @@ public class PlayerDao {
         // Filtro vazio {}, deleta todos os campos
         col.deleteMany(new Document());
     }
+
+    public void resetAll() {
+        
+    }
 }

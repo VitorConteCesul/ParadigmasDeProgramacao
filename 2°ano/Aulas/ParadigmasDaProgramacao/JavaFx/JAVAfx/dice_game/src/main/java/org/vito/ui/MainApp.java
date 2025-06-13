@@ -39,6 +39,7 @@ public class MainApp extends Application {
 
 
 
+
     public void start(Stage stage){
         // Tabela de dados
         TableView<Player> table = new TableView<>(data);
@@ -72,17 +73,19 @@ public class MainApp extends Application {
         });
 
         Button Rolar = new Button("Rolar dado");
-        Rolar.setOnAction(e ->
-                Player p = table.getSelectionModel().getSelectedItem();
-                if(p != null){
-                    int dado =  rnd.nextInt(6) + 1;
-                    pd.addPoints(p.id(), dado);
+        Rolar.setOnAction(e -> {
+                    Player p = table.getSelectionModel().getSelectedItem();
+                    if (p != null) {
+                        int dado = rnd.nextInt(6) + 1;
+                        pd.addPoints(p.id(), dado);
+                    }
                 }
         );
         Button Reset = new Button("Reset");
-        Reset.setOnAction(e ->
-                pd.resetAll());
-                refresh();
+        Reset.setOnAction(e -> {
+                    pd.resetAll();
+                    refresh();
+                }
         );
 
 

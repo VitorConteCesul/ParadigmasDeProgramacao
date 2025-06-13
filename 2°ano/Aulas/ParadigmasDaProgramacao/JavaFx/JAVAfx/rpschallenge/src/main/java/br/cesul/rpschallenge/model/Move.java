@@ -7,6 +7,10 @@ public enum Move {
     PAPEL,
     TESOURA;
 
+    public static Move getRandomMove() {
+        return values()[(int) (Math.random() * 3)];
+    }
+
     // Método que compara  ESTA jogada (this) com outra (parametro recebido)
     // Possíveis retornos das jogadas
     // - 1 > vitoria
