@@ -52,13 +52,13 @@ public class TripController {
         colCidade.setCellValueFactory(c ->
                 new SimpleStringProperty(c.getValue().getDestino()));
 
-        colIni.setCellFactory(c ->
+        colIni.setCellValueFactory(c ->
                 new SimpleStringProperty(c.getValue().getDataInicio().format(fmt)));
 
-        colFim.setCellFactory(c ->
+        colFim.setCellValueFactory(c ->
                 new SimpleStringProperty(c.getValue().getDataFim().format(fmt)));
 
-        colCusto.setCellFactory(c ->
+        colCusto.setCellValueFactory(c ->
                 new SimpleStringProperty(c.getValue().getCusto()));
 
         // Preencher a tabela com dados já gravados
