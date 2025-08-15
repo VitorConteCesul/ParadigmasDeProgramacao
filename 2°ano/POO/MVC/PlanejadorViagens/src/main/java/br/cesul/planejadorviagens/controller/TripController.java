@@ -14,6 +14,7 @@ package br.cesul.planejadorviagens.controller;
 
 import br.cesul.planejadorviagens.model.Viagem;
 import br.cesul.planejadorviagens.services.PlanejamentoService;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -26,17 +27,21 @@ public class TripController {
 
     @FXML private DatePicker dataInicioPicker;
     @FXML private DatePicker dataFimPicker;
+    @FXML private TextField partidaField;
     @FXML private TextField destinoField;
     @FXML private TextField orcamentoField;
     @FXML private Button btnAdicionar;
     @FXML private TableView<Viagem> viagensTable;
+    @FXML private TableColumn<Viagem, String> colCidadePartida;
     @FXML private TableColumn<Viagem, String> colCidade;
     @FXML private TableColumn<Viagem, String> colIni;
     @FXML private TableColumn<Viagem, String> colFim;
     @FXML private TableColumn<Viagem, Number> colCusto;
-    @FXML private Label lbtTotal;
+    @FXML private Label lblTotal;
 
     private final PlanejamentoService service = new PlanejamentoService();
+
+   // private final Viagem viagemSelecionada = viagensTable.getSelectionModel().getSelectedItem();
 
     private final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -49,6 +54,9 @@ public class TripController {
         // SimplesStringProperty ele pode observar aquela propriedade
         // e atualizar a interface automaticamente.
 
+        colCidadePartida.setCellValueFactory(c ->
+                new SimpleStringProperty(c.getValue().getPartida()));
+
         colCidade.setCellValueFactory(c ->
                 new SimpleStringProperty(c.getValue().getDestino()));
 
@@ -59,7 +67,13 @@ public class TripController {
                 new SimpleStringProperty(c.getValue().getDataFim().format(fmt)));
 
         colCusto.setCellValueFactory(c ->
-                new SimpleStringProperty(c.getValue().getCusto()));
+                new SimpleDoubleProperty(c.getValue().getCusto()));
+
+//        viagensTable.getSelectionModel().selectedItemProperty().addListener(
+//                    (obs, oldV, nova) -> {
+//                });
+
+
 
         // Preencher a tabela com dados já gravados
         // Chamando o service para buscar as viagens
@@ -74,10 +88,25 @@ public class TripController {
         try{
             // Conversão de dados
             double custo = Double.parseDouble(orcamentoField.getText().replace(",", "."));
+
+            service.adicionar(partidaField.getText(), destinoField.getText(), dataInicioPicker.getValue(), dataFimPicker.getValue(), custo);
+
+            viagensTable.getItems().setAll(service.listar());
+            atualizarTotal();
+
+
+
         }catch (Exception ex){
             mostrarErro(ex.getMessage());
         }
 
+    }
+
+    private void limparCampos(){
+        destinoField.clear();
+        orcamentoField.clear();
+        dataFimPicker.setValue(null);
+        dataInicioPicker.setValue(null);
     }
 
     private void mostrarErro(String msg){
@@ -85,6 +114,6 @@ public class TripController {
     }
 
     private void atualizarTotal(){
-        lbtTotal.setText("Total: R$ " + String.format("%.2f",service.totalGasto()));
+        lblTotal.setText("Total: R$ " + String.format("%.2f",service.totalGasto()));
     }
 }

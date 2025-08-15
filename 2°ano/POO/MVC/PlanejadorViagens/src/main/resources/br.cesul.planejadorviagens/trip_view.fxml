@@ -13,17 +13,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.cesul.planejadorviagens.controller.TripController">
    <children>
-      <BorderPane layoutX="-6.0" prefHeight="403.0" prefWidth="603.0">
+      <BorderPane layoutX="-6.0" prefHeight="403.0" prefWidth="703.0">
          <top>
             <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
                   <VBox prefHeight="100.0" prefWidth="173.0">
                      <children>
                         <DatePicker fx:id="dataInicioPicker" />
-                        <DatePicker fx:id="dateFimPicker" prefHeight="25.0" prefWidth="158.0">
+                        <DatePicker fx:id="dataFimPicker" prefHeight="26.0" prefWidth="181.0">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
@@ -35,17 +34,30 @@
                   </VBox>
                   <VBox prefHeight="100.0" prefWidth="430.0">
                      <children>
-                        <TextField fx:id="destinoField" promptText="Digite o destino" />
-                        <TextField fx:id="orcamentoField" promptText="Digite o Orçamento">
+                        <TextField fx:id="partidaField" promptText="Digite o Ponto de Partida">
                            <VBox.margin>
-                              <Insets top="10.0" />
+                              <Insets />
                            </VBox.margin>
                         </TextField>
-                        <Button fx:id="btnAdicionar" mnemonicParsing="false" onAction="#adicionar" prefHeight="25.0" prefWidth="172.0" text="Adicionar Viagem">
+                        <TextField fx:id="destinoField" promptText="Digite o Destino">
                            <VBox.margin>
                               <Insets top="10.0" />
+                           </VBox.margin></TextField>
+                        <TextField fx:id="orcamentoField" promptText="Digite o Orçamento">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
-                        </Button>
+                        </TextField>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="btnAdicionar" mnemonicParsing="false" onAction="#adicionar" prefHeight="25.0" prefWidth="172.0" text="Adicionar Viagem" />
+                              <Button mnemonicParsing="false" text="Editar">
+                                 <HBox.margin>
+                                    <Insets left="50.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
                      </children>
                      <HBox.margin>
                         <Insets left="10.0" />
@@ -70,6 +82,7 @@
          <center>
             <TableView fx:id="viagensTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <columns>
+                  <TableColumn fx:id="colCidadePartida" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Partida" />
                 <TableColumn fx:id="colCidade" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Destino " />
                 <TableColumn fx:id="colIni" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Inicio" />
                   <TableColumn fx:id="colFim" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Fim" />

@@ -24,9 +24,11 @@ public class PlanejamentoService {
 
     // Receber os dados da viagem (como se fosse da tela)
     // Adicionar uma viagem se as regras estiverem OK
-    public void adicionar(String destino, LocalDate ini, LocalDate fim, double custo) throws IllegalAccessException {
+    public void adicionar(String partida, String destino, LocalDate ini, LocalDate fim, double custo) throws IllegalAccessException {
         // Se algo estiver errado, lança exceção
         // que será capturado pelo controller ou pela interface
+        if (partida == null || partida.isBlank())
+            throw new IllegalAccessException("Partida vazia");
         if (destino == null || destino.isBlank())
             throw new IllegalAccessException("Destino vazio");
         if (ini == null || fim == null)
@@ -39,7 +41,7 @@ public class PlanejamentoService {
             throw new IllegalAccessException("Conflito com outra viagem");
 
 
-        repo.salvar(new Viagem(null,destino, custo, ini, fim));
+        repo.salvar(new Viagem(null,partida, destino, custo, ini, fim));
     }
 
     // Métodos de consulta
