@@ -8,6 +8,7 @@ import br.cesul.planejadorviagens.config.MongoConfig;
 import br.cesul.planejadorviagens.model.Viagem;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,6 +28,21 @@ public class ViagemRepository {
     public void salvar(Viagem v){
         // Objeto convertido automatimente em BSON
         col.insertOne(v);
+    }
+
+    public void atualizar(Viagem v){
+        col.replaceOne(Filters.eq("_id", v.getId()), v);
+    }
+
+    public boolean conflitaExcluindoId(ObjectId ignorarId, LocalDate ini, LocalDate fim){
+        long qtd = col.countDocuments(
+                Filters.and(
+                        Filters.lte("dataInicio", fim),
+                        Filters.gte("dataFim", ini),
+                        Filters.ne("_id", ignorarId)
+                )
+        );
+        return qtd > 0;
     }
 
     public List<Viagem> listarTodas(){
@@ -54,10 +70,10 @@ public class ViagemRepository {
                 Filters.and(
                         // a viagem começa antes ou durante o intervalo
                         // "CAMPO" é menor ou igual ao VALOR"
-                        Filters.lte("dataInicio", fim),
+                        Filters.lte("dataInicio", ini),
                         // a viagem termina depois ou durante o inicio
                         // "CAMPO é maior ou igual ao VALOR
-                        Filters.gte("dataFim", ini)
+                        Filters.gte("dataFim", fim)
                 )
         );
         return qtd > 0;

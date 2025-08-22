@@ -21,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class TripController {
     // Elementos do FXML (fx:id)
@@ -31,6 +32,7 @@ public class TripController {
     @FXML private TextField destinoField;
     @FXML private TextField orcamentoField;
     @FXML private Button btnAdicionar;
+    @FXML private Button btnEditar;
     @FXML private TableView<Viagem> viagensTable;
     @FXML private TableColumn<Viagem, String> colCidadePartida;
     @FXML private TableColumn<Viagem, String> colCidade;
@@ -38,6 +40,9 @@ public class TripController {
     @FXML private TableColumn<Viagem, String> colFim;
     @FXML private TableColumn<Viagem, Number> colCusto;
     @FXML private Label lblTotal;
+
+    private Viagem viagemEmEdicao = null;
+    private boolean modoEdicao = false;
 
     private final PlanejamentoService service = new PlanejamentoService();
 
@@ -69,16 +74,47 @@ public class TripController {
         colCusto.setCellValueFactory(c ->
                 new SimpleDoubleProperty(c.getValue().getCusto()));
 
-//        viagensTable.getSelectionModel().selectedItemProperty().addListener(
-//                    (obs, oldV, nova) -> {
-//                });
-
-
+        viagensTable.getSelectionModel().selectedItemProperty().addListener(
+                    (obs, oldViagem, novaViagem) ->
+                    {
+                        if(novaViagem != null){
+                            partidaField.setText(novaViagem.getPartida());
+                            destinoField.setText(novaViagem.getDestino());
+                            dataInicioPicker.setValue(novaViagem.getDataInicio());
+                            dataFimPicker.setValue(novaViagem.getDataFim());
+                            orcamentoField.setText(String.format(Locale.US, "%.2f", novaViagem.getCusto()));
+                        }
+                    }
+                    );
 
         // Preencher a tabela com dados já gravados
         // Chamando o service para buscar as viagens
         viagensTable.setItems(FXCollections.observableArrayList(service.listar()));
         atualizarTotal();
+    }
+
+    @FXML
+    public void editar(){
+        Viagem selecionada = viagensTable.getSelectionModel().getSelectedItem();
+        if (selecionada == null){
+            mostrarErro("Selecione uma viagem na tabela para editar");
+            return;
+        }
+        try {
+            double custo = Double.parseDouble(orcamentoField.getText().replace(",", "."));
+
+            service.atualizar(selecionada, partidaField.getText(), destinoField.getText(),
+                    dataInicioPicker.getValue(), dataFimPicker.getValue(),
+                    custo);
+
+            viagensTable.getItems().setAll(service.listar());
+            atualizarTotal();
+            limparCampos();
+            viagensTable.getSelectionModel().clearSelection();
+
+        }catch (Exception e){
+            mostrarErro(e.getMessage());
+        }
     }
 
     @FXML
@@ -103,6 +139,7 @@ public class TripController {
     }
 
     private void limparCampos(){
+        partidaField.clear();
         destinoField.clear();
         orcamentoField.clear();
         dataFimPicker.setValue(null);

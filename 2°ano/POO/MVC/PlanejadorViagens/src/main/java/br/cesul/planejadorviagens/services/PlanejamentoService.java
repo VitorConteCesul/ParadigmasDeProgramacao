@@ -27,6 +27,32 @@ public class PlanejamentoService {
     public void adicionar(String partida, String destino, LocalDate ini, LocalDate fim, double custo) throws IllegalAccessException {
         // Se algo estiver errado, lança exceção
         // que será capturado pelo controller ou pela interface
+        validar(partida, destino, ini, fim, custo);
+        if (repo.conflita(ini, fim))
+            throw new IllegalAccessException("Conflito com outra viagem");
+
+
+        repo.salvar(new Viagem(null,partida, destino, custo, ini, fim));
+    }
+
+    public void atualizar(Viagem v, String partida, String destino, LocalDate ini, LocalDate fim, double custo) throws IllegalAccessException {
+        if(v == null || v.getId() == null){
+            throw new IllegalArgumentException("Viagem Inválida");
+        }
+        validar(partida, destino, ini, fim, custo);
+        if(repo.conflitaExcluindoId(v.getId(), ini, fim)){
+            throw new IllegalArgumentException("Conflita com outra viagem");
+        }
+
+        v.setPartida(partida);
+        v.setDestino(destino);
+        v.setDataInicio(ini);
+        v.setDataFim(fim);
+        v.setCusto(custo);
+        repo.atualizar(v);
+    }
+
+    private static void validar(String partida, String destino, LocalDate ini, LocalDate fim, double custo) throws IllegalAccessException {
         if (partida == null || partida.isBlank())
             throw new IllegalAccessException("Partida vazia");
         if (destino == null || destino.isBlank())
@@ -37,11 +63,6 @@ public class PlanejamentoService {
             throw new IllegalAccessException("Inicio posterior ao fim");
         if (custo < 0)
             throw new IllegalAccessException("Custo negativo");
-        if (repo.conflita(ini, fim))
-            throw new IllegalAccessException("Conflito com outra viagem");
-
-
-        repo.salvar(new Viagem(null,partida, destino, custo, ini, fim));
     }
 
     // Métodos de consulta
