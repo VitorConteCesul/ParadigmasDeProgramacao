@@ -1,4 +1,6 @@
 package br.cesul.planejadorviagens.model;
+import org.bson.types.ObjectId;
+import java.time.LocalDate;
 
 // Espelhar os dados do banco através de uma entidade
 // Esta classe vai representar UMA VIAGEM
@@ -7,9 +9,7 @@ package br.cesul.planejadorviagens.model;
 // - Construtor
 // - Atributos com getters/setters
 
-import org.bson.types.ObjectId;
 
-import java.time.LocalDate;
 
 public class Viagem {
     private ObjectId id; //Armazenar _id gerado pelo mongo

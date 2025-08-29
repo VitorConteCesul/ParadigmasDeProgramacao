@@ -12,7 +12,7 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 
 // Faremos suporte ao mapeamento dos POJO's
 public class MongoConfig {
-    public static final String URI = "mongodb://localhost:27017";
+    public static final String URI = "mongodb   ://localhost:27017";
     // Cliente que abre sessão com o banco
     public static final MongoClient client;
     // Representa a entidade ex: "tripPlanner"
