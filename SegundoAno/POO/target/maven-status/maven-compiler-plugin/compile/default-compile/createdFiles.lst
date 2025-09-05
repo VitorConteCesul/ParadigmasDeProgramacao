@@ -1,0 +1,7 @@
+br\Cesul\expensetracker\view_model\ExpenseViewModel$1.class
+br\Cesul\expensetracker\MainApp.class
+br\Cesul\expensetracker\view_model\ExpenseViewModel.class
+br\Cesul\expensetracker\repository\ExpenseRepository.class
+br\Cesul\expensetracker\config\MongoConfig.class
+br\Cesul\expensetracker\view\ExpenseView.class
+br\Cesul\expensetracker\model\Expense.class

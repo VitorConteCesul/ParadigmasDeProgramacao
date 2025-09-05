@@ -1,6 +1,7 @@
 package br.cesul.expensetracker.view;
 
 import br.cesul.expensetracker.model.Expense;
+import br.cesul.expensetracker.view_model.ExpenseViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -29,6 +30,8 @@ public class ExpenseView {
     @FXML private Button deleteButton;
     @FXML private Label totalLabel;
 
+    private final ExpenseViewModel vm = new ExpenseViewModel();
+
     // Método chamado automaticamente pelo FXMLLoader logo que o app sobe
     // Primeiro a ser executado
     @FXML
@@ -36,7 +39,7 @@ public class ExpenseView {
         // Bindings de entrada
         // Campo de descrição ->
 
-        descriptionField.textProperty().bindBidirectional();
+        descriptionField.textProperty().bindBidirectional(vm.descriptionProperty());
         TextFormatter<Number> amountFormatter =
                 new TextFormatter<>(new NumberStringConverter());
         amountField.setTextFormatter(amountFormatter);
@@ -44,9 +47,9 @@ public class ExpenseView {
         // Fazer um binding bidirecional entre o NumberProperty(VM)
         // e o valueProperty (formatter)
 
-        Bindings.bindBidirectional();
+        Bindings.bindBidirectional(vm.amountProperty(), amountFormatter.valueProperty());
 
-        datePicker.valueProperty().bindBidirectional();
+        datePicker.valueProperty().bindBidirectional(vm.dateProperty());
 
         // Configuração da tabela
         // Dizer qual getter do expense abastece cada coluna
@@ -56,13 +59,16 @@ public class ExpenseView {
 
         // Ligar a lista observável do viewModel diretamente na tableview
         // (popular os dados)
-        expenseTable.setItems();
+        expenseTable.setItems(vm.getExpenses());
 
         // Mostrar a label formatada com o valor total
         // (atualizar sozinha)
-        totalLabel.textProperty.bind();
+        totalLabel.textProperty().bind(vm.totalProperty().asString("Total: R$ %.2f"));
 
-        addButton.setOnAction(e -> vm.addExpense())
+        addButton.setOnAction(e -> vm.addExpense());
+        deleteButton.setOnAction(e -> vm.deleteSelect(
+                expenseTable.getSelectionModel().getSelectedItem()
+        ) );
     }
 }
 
