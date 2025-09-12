@@ -29,7 +29,7 @@
                   </VBox>
                   <VBox prefHeight="100.0" prefWidth="368.0" spacing="10.0">
                      <children>
-                        <DatePicker fx:id="dataPicker" prefHeight="26.0" prefWidth="347.0" promptText="Selecione a data do gasto" />
+                        <DatePicker fx:id="datePicker" prefHeight="26.0" prefWidth="347.0" promptText="Selecione a data do gasto" />
                         <Button fx:id="addbutton" mnemonicParsing="false" prefHeight="30.0" prefWidth="329.0" text="Adicionar" />
                      </children>
                      <HBox.margin>
